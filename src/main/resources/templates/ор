@@ -1,0 +1,52 @@
+<#list books as book>
+                <form action="/AddToCart" method="post">
+                    <tr>
+                        <div class="col">
+                            <div class="card shadow-sm">
+
+                                <img src="/images/${book.previewImageID}">
+                                <div class="card-body">
+                                    <p class="card-text">${book.title}</p>
+                                    <input type="hidden" name="nameproduct" value="${book.title}" readonly>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                            <input type="submit" class="btn btn-sm btn-outline-secondary" value="Удалить">
+                                        </div>
+                                        <small class="text-body-secondary">Стоимость: ${book.price} бел.руб </small>
+                                        <input type="hidden" name="cost" value="${book.price}" readonly>
+                                        <input type="hidden" name="image" value="/images/${book.previewImageID}" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </tr>
+                </form>
+             </#list><#list books as book>
+                         <tr>
+                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                             <div class="col">
+                                 <div class="card shadow-sm">
+                                     <link rel="stylesheet" href="/static/css/2.css">
+                                     <form action="/books/delete/${book.ID}" method="post">
+                                         <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                         <div class="card-body">
+                                             <p class="card-text">${book.title}</p>
+                                             <input type="hidden" name="nameproduct" value="Букет карликовых роз" readonly>
+                                             <div class="d-flex justify-content-between align-items-center">
+                                                 <div class="btn-group">
+                                                     <input type="submit" class="btn btn-sm btn-outline-secondary" value="Удалить букет">
+                                                 </div>
+                                                 <small class="text-body-secondary">Стоимость:${book.price} бел.руб </small>
+                                                 <input type="hidden" name="cost" value="90" readonly>
+                                             </div>
+                                         </div>
+                                     </form>
+                                 </div>
+                             </div>
+                             </div>
+                         </tr>
+
+
+                     </#list>
