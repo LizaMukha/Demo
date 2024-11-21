@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.print.Book;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -35,7 +36,7 @@ public class BooksController {
         return "books";
     }
     @GetMapping("/getBooks")
-    public String searchFlowersByTitle(@RequestParam(value = "title", required = false) String searchQuery, Model model) {
+    public String searchBooksByTitle(@RequestParam(value = "title", required = false) String searchQuery, Model model) {
         List<Books> searchResults;
         if (searchQuery != null && !searchQuery.isEmpty()) {
             // Выполните поиск цветков по названию
@@ -46,14 +47,23 @@ public class BooksController {
         }
         model.addAttribute("books", searchResults);
         return "books";
+
+
+
+
+
+
+
+
+
     }
-    @GetMapping("/books/{ID}")
-    public String productInfo(@PathVariable Long ID,Model model){
-        Books books=booksService.getBooksByID(ID);
-        model.addAttribute("books",books);
-        model.addAttribute("image",books.getImages());
-        return"admin";
-    }
+//    @GetMapping("/books/{ID}")
+//    public String productInfo(@PathVariable Long ID,Model model){
+//        Books books=booksService.getBooksByID(ID);
+//        model.addAttribute("books",books);
+//        model.addAttribute("image",books.getImages());
+//        return"admin";
+//    }
     @PostMapping("/books/create")
     public String createBooks(@RequestParam("file1") MultipartFile file1,
             Books books, Principal principal)throws IOException {
@@ -67,4 +77,50 @@ public class BooksController {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @GetMapping("/books/{ID}")
+    public String getBooksDetails(@PathVariable Long ID, Model model) {
+        Books book = booksService.getBooksByID(ID);
+        if (book == null) {
+            throw new RuntimeException("Book not found with ID: " + ID);
+        }
+        model.addAttribute("book", book);
+        return "book-details"; // Имя HTML-шаблона
+    }
+
+
+
+
+
+
+
+    @GetMapping("/getBooksByGenre")
+    public String getBooks(@RequestParam(required = false) String genre, Model model) {
+        List<Books> books;
+        if (genre != null && !genre.isEmpty()) {
+            books = booksService.getBooksByGenre(genre);
+        } else {
+            books = booksService.getAllBooks();
+        }
+        model.addAttribute("books", books);
+        return "books"; // Имя вашего шаблона списка книг
+    }
 }

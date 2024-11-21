@@ -117,4 +117,14 @@ public class BooksService {
 //        return booksRepository.findById(id);
 //    }
 
+
+
+
+
+    public List<Books> getBooksByGenre(String genre) {
+        return booksRepository.findByGenre(genre);
+    }
+
+
+
 }
